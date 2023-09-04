@@ -1,57 +1,38 @@
-import {  useState } from "react";
-import './App.css';
-import SearchIcon from './search.svg';
+import React, { useEffect, useState } from "react";
+import './App.css'
 import MovieCard from "./MovieCard";
 
-
 const API_URL = 'http://www.omdbapi.com?apikey=c032e2d7';
-
-
-
 const App = () => {
-
-    const [movies, setMovies] = useState([]);
-    const [search, setSearch] = useState('')
+    
+    const  [movies, setMovies] = useState([])
 
     const searchMovies = async (title) => {
-        const response = await fetch(`${API_URL}&s=${title}`);
+        const response = await fetch(`${API_URL}&s=${title}`)
         const data = await response.json();
-        setMovies(data.Search)
+        setMovies(data.Search);
     }
-
+useEffect(() => {
+    searchMovies('2010')
+}, []);
 
     return (
         <div className="app">
-            <h1>Movieland</h1>
-
+            <h1>MovieLand</h1>
             <div className="search">
                 <input 
-                onChange={(e) => setSearch(e.target.value)}
-                value={search}
+                onChange={(event) => {
+                    
+                }} 
                 placeholder="Search for movies"
-                type="text" 
                 />
-                <img 
-                src={SearchIcon} 
-                alt="img" 
-                onClick={() => searchMovies(search)}
-                />
+               <img src="https://www.freeiconspng.com/uploads/search-icon-png-31.png" width="350" alt="Drawing Vector Search" onClick={() => {}} />
             </div>
 
-                    { movies?.length > 0
-                        ? (
-                        <div className="container">
-                        {movies.map((movie) => (
-                        <MovieCard movie={movie} />
-                         ))}
-                         </div>
-                        ) : (
-                         <div className="empty">
-                             <h2>No Movies found :(</h2>
-                         </div>
-                        )
-                    };
-
+            <div className="container">
+                <MovieCard movie1={movies[7]} />
+            </div>
+            
          </div>
      );
     };
